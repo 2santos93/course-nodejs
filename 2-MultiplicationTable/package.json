@@ -1,0 +1,19 @@
+{
+  "name": "multiplicationtable",
+  "version": "1.0.0",
+  "description": "App for create a multiplication table in console",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "multiplication",
+    "table"
+  ],
+  "author": "Nelson Caicedo",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "yargs": "^17.0.1"
+  }
+}
