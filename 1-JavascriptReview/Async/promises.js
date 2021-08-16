@@ -2,6 +2,7 @@ const { users, salaries } = require('./data/data');
 
 const getUser = (id) => {
     return new Promise( (resolve, reject) => {
+        
         const user = users.find((user) => user.id === id);
 
         if(!user) {
@@ -23,14 +24,14 @@ const getSalary = (user) => {
     });
 };
 
-// getUser(2)
-//     .then( (user) => {
-//         console.log(`The user is ${user.name}`)
-//         return getSalary(user);
-//     })
-//     .then( (salary) => console.log(`And the salary es ${salary.value}`))
-//     .catch( (err) => console.log(err) );
-    
+getUser(2)
+    .then( (user) => {
+        console.log(`The user is ${user.name}`)
+        return getSalary(user);
+    })
+    .then( (salary) => console.log(`And the salary es ${salary.value}`))
+    .catch( (err) => console.log(err) );
+
 module.exports = {
     getUser,
     getSalary

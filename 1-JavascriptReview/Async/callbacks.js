@@ -3,7 +3,7 @@ const {users, salaries} = require('./data/data');
 const getUser = (id, callback) => {
 
     const user = users.find((user) => user.id === id);
-
+    
     if(!user) callback('user not found', null);
 
     callback(null, user);
@@ -31,7 +31,6 @@ getUser(1, (err, user) => {
             console.log(err);
             return;
         }
-        console.log(`epale ${salary}`);
         console.log(`the user ${user.id} charges ${salary.value}`);
 
     })
