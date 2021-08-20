@@ -4,9 +4,61 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="1073046861755-pdcf4t2acvnd7aismd94sm9jo43bdmij.apps.googleusercontent.com">
     <title>Nelson's Page</title>
 </head>
 <body>
     <p>Nelson's Page</p>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();">Sign out</a>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+
+        function onSignIn(googleUser) {
+            const profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            const id_token = googleUser.getAuthResponse().id_token;
+
+            makeRequest(id_token);
+        }
+
+        async function makeRequest(id_token){
+
+            const localhost = 'http://localhost:3000';
+            const server = 'https://restserver-nodejs-nelson.herokuapp.com';
+
+            const url = (window.location.href.includes('localhost'))
+                ? localhost
+                : server;
+
+            try{
+
+                const response = await fetch(`${url}/api/auth/login/google`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({id_token})
+                });
+                const data = await response.json();
+    
+                console.log(data);
+            }catch(err){
+                console.log(err);
+            }
+        };
+
+        function signOut() {
+            const auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+            console.log('User signed out.');
+        });
+    }
+    </script>
 </body>
 </html>

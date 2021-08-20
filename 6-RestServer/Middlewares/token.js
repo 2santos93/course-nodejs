@@ -19,7 +19,7 @@ const checkToken = async (req, res, next) => {
 
         next();
     }catch(err){
-        res.status(401).json(err);
+        return res.status(401).json(err);
     }
 
 }; 

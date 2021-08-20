@@ -15,19 +15,16 @@ const {
     postUser,
     updateUser,
     deleteUser
-} = require('../controllers/users');
-
-
-
+} = require('../controllers/user');
 
 const router = Router();
 
-router.get('/users', [
+router.get('/', [
     checkToken,
     errorHandler
 ], getUsers);
 
-router.post('/user', [
+router.post('/', [
     checkToken,
     check('name').notEmpty().isString(),
     check('email').notEmpty().isEmail().custom( isEmailDuplicated ),
@@ -36,14 +33,14 @@ router.post('/user', [
     errorHandler
 ], postUser);
 
-router.put('/user/:id', [
+router.put('/:id', [
     checkToken,
     check('id').isMongoId(),
     check('id').custom(idUserExist),
     errorHandler
 ], updateUser);
 
-router.delete('/user/:id', [
+router.delete('/:id', [
     checkToken,
     checkRoles(['ADMIN']),
     check('id').isMongoId(),
