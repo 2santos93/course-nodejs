@@ -9,10 +9,9 @@ const lblEscritorio3 = document.querySelector('#lblEscritorio3');
 const lblTicket4 = document.querySelector('#lblTicket4');
 const lblEscritorio4 = document.querySelector('#lblEscritorio4');
 
-socket.on('attendingTickets', (tickets) => {
-
+const showAttendingTickets = (tickets) => {
     if(tickets.length <= 0) return;
-console.log(tickets)
+
     const [ticket1, ticket2, ticket3, ticket4] = tickets;
 
     if(ticket1){
@@ -31,4 +30,14 @@ console.log(tickets)
         lblTicket4.innerText = `Ticket ${ticket4.number}`;
         lblEscritorio4.innerText = `Desk ${ticket4.desk}`;
     }
+};
+
+socket.on('attendingTickets', (attendingTickets) => {
+    console.log(attendingTickets)
+    showAttendingTickets(attendingTickets)
+});
+
+socket.on('onLoad', ({attendingTickets}) => {
+    showAttendingTickets(attendingTickets)
+
 });

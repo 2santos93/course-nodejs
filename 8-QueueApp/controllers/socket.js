@@ -4,11 +4,11 @@ const ticketController = new TicketController();
 
 const socketController = (socket) => {
     
-    socket.emit('lastTicket', ticketController.getLastTicketNumber());
-
-    socket.emit('attendingTickets', ticketController.getAttendingTickets());
-
-    socket.emit('pendingTickets', ticketController.getPendingTickets());
+    socket.emit('onLoad', {
+        lastTicketNumber: ticketController.getLastTicketNumber(),
+        pendingTickets: ticketController.getPendingTickets(),
+        attendingTickets: ticketController.getAttendingTickets()
+    });
 
     socket.on('createTicket', (data, callback) => {
 

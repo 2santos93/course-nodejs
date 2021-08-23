@@ -6,9 +6,9 @@ const lblNuevoTicket = document.querySelector('#lblNuevoTicket');
 socket.on('connect', () => {
     btnGenerateTicket.disabled = false;
 
-    socket.on('lastTicket', (lastTicket) => {
-        if(lastTicket)
-            lblNuevoTicket.innerText = lastTicket;
+    socket.on('onLoad', ({lastTicketNumber}) => {
+        if(lastTicketNumber)
+            lblNuevoTicket.innerText = lastTicketNumber;
     })
 });
 

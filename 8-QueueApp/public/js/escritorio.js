@@ -16,6 +16,19 @@ const getDeskFromUrl = () => {
     return params.get('desk');
 }
 
+const showPendingTickets = (pendingTickets) => {
+    const quantityPendingTickets = pendingTickets.length;
+
+    if(quantityPendingTickets <= 0){
+        lblTicketsPending.style.display= 'none'
+        return divTicketsEmpty.style.display = '';
+    }
+
+    divTicketsEmpty.style.display = 'none';
+    lblTicketsPending.style.display = '';
+    lblTicketsPending.innerText = quantityPendingTickets;
+}
+
 btnAttendTicket.addEventListener('click', () => {
     const desk = getDeskFromUrl();
     socket.emit('attendTicket', desk, (ticketNumber) => {
@@ -31,17 +44,11 @@ btnAttendTicket.addEventListener('click', () => {
 });
 
 socket.on('pendingTickets', (pendingTickets) => {
-
-    const quantityPendingTickets = pendingTickets.length;
-
-    if(quantityPendingTickets <= 0){
-        lblTicketsPending.style.display= 'none'
-        return divTicketsEmpty.style.display = '';
-    }
-
-    divTicketsEmpty.style.display = 'none';
-    lblTicketsPending.style.display = '';
-    lblTicketsPending.innerText = quantityPendingTickets;
+    showPendingTickets(pendingTickets);
 
 });
+
+socket.on('onLoad', ({pendingTickets}) => {
+    showPendingTickets(pendingTickets);
+})
 
