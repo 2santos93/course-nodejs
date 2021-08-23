@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { socketController } = require('../controllers/socket');
 
 class Server {
 
@@ -19,15 +20,7 @@ class Server {
 
     sockets = () => {
         
-        this.io.on('connection', (socket) => {
-
-            socket.on('message', (data) => {
-                console.log(`Received: ${data.message}`);
-                socket.broadcast.emit('message', data);
-            });
-  
-
-        });
+        this.io.on('connection', socketController);
     }
 
     listen = () => {
